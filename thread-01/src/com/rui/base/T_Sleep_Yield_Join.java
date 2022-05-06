@@ -1,4 +1,4 @@
-package com.rui;
+package com.rui.base;
 
 public class T_Sleep_Yield_Join {
 

@@ -1,4 +1,4 @@
-package com.rui;
+package com.rui.base;
 
 /**
  * 线程状态

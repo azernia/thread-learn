@@ -1,4 +1,4 @@
-package com.rui;
+package com.rui.base;
 
 import java.util.concurrent.TimeUnit;
 
