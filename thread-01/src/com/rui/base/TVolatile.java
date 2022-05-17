@@ -9,7 +9,7 @@ import java.util.concurrent.TimeUnit;
  * 禁止指令重排序
  * DCL 单例
  * Double Check Lock
- * Mgr06.java
+ * 不能保证原子性
  *
  * @author rui
  * @since 2022/5/17 09:58
