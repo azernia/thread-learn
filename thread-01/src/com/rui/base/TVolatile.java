@@ -5,6 +5,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * volatile
  * 保证线程可见性
+ *  使用了 CPU 的缓存一致性协议
  * 禁止指令重排序
  * DCL 单例
  * Double Check Lock
