@@ -13,6 +13,8 @@ public class SemaphoreDemo {
     public static void main(String[] args) {
         // 最多允许多少个线程同时执行
         Semaphore semaphore = new Semaphore(1);
+        // true 表示公平
+        // Semaphore semaphore1 = new Semaphore(2, true);
 
         new Thread(() -> {
             try {
