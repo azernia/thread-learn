@@ -3,6 +3,9 @@ package com.rui.createthread;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.FutureTask;
+
 /**
  * description: 测试创建线程
  * <hr/>
@@ -30,6 +33,17 @@ public class TestCreateThread {
         };
         new Thread(runnable).start();
         log.info("run in main");
+    }
+
+    @Test
+    public void createByFutureTask() throws ExecutionException, InterruptedException {
+        FutureTask<Integer> task = new FutureTask<>(() -> {
+           log.info("hello future task");
+           Thread.sleep(1000);
+           return 100;
+        });
+        new Thread(task, "t1").start();
+        log.info("task result {}", task.get());
     }
 
 }
