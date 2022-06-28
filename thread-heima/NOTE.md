@@ -1,0 +1,36 @@
+# 学习
+## Java 查看进程
+- `jps` 查看所有 `Java` 进程
+- `jstack` <PID> 查看某个 `Java` 进程的所有线程状态
+- `jconsole` 查看某个 `Java` 进程的的运行状况
+
+## 线程上下文切换（Thread Context Switch）
+因为以下一些原因导致 cpu 不再执行当前的线程，转而执行另一个线程的代码
+- 线程的 `cpu` 时间片用完
+- 垃圾回收 **暂停当前所有工作线程**
+- 有更高优先级的线程需要运行
+- 线程自己调用了 `sleep、yield、wait、join、park、synchronized、lock` 等方法
+当 `Context Switch` 发生时，需要由操作系统保存当前线程的状态，并恢复另一个线程的状态，`Java` 中对应的概念就是程序计数器（`Program Counter Register`），它的作用是记住下一条 `jvm` 指令的执行地址，是线程私有的
+- 状态包括程序计数器、虚拟机栈中每个栈帧的信息，如局部变量、操作数栈、返回地址等
+- `Context Switch` **频繁发生会影响性能**
+
+## Thread 常见方法
+| 方法名              | static | 功能说明                                | 注意                                                                                                                    |
+|------------------|--------|-------------------------------------|-----------------------------------------------------------------------------------------------------------------------|
+| start()          |        | 启动一个新线程，在新的线程运行`run`方法中的代码          | `start` 方法只是让线程进入就绪，里面代码不一定立刻运行（`CPU` 的时间片还没分给它）。每个线程对象的start方法只能调用一次，如果调用了多次会出现 `IllegalThreadStateException`        |
+| run()            |        | 新线程启动后会调用的方法                        | 如果在构造`Thread`对象时传递了`Runnable`参数，则线程启动后会调用`Runnable`中的`run`方法，否则默认不执行任何操作。但可以创建`Thread`的子类对象，来覆盖默认行为                   |
+| join()           |        | 等待线程运行结束                            |                                                                                                                       |
+| join(long n)     |        | 等待线程运行结束，最多等待`n`毫秒                  |                                                                                                                       |
+| getId()          |        | 获取线程长整型`ID`                         |                                                                                                                       |
+| getName()        |        | 获取线程名                               |                                                                                                                       |
+| setName(String)  |        | 修改线程名                               |                                                                                                                       |
+| getPriority()    |        | 获取线程优先级                             |                                                                                                                       |
+| setPriority(int) |        | 设置线程优先级                             | `java`中规定线程优先级是`1~10`的整数，较大的优先级能提高该线程被`CPU`调度的机率                                                                      |
+| getState()       |        | 获取线程状态                              | `Java`中线程状态是用`6`个`enum`表示，分别为：`NEW, RUNNABLE, BLOCKED, WAITING, TIMED_WAITING, TERMINATED`                            |
+| isInterrupted()  |        | 判断是否被打断                             | 不会清除`打断标记`                                                                                                            |
+| isAlive()        |        | 判断线程是否存活(还未运行完毕)                    |                                                                                                                       |
+| interrupt()      |        | 打断线程                                | 如果被打断线程正在`sleep，wait，join`会导致被打断的线程抛出`InterruptedException`，并清除`打断标记`；如果打断的正在运行的线程，则会设置`打断标记`；`park`的线程被打断，也会设置`打断标记` |
+| interrupted()    | static | 判断当前线程时候被打断                         | 会清除`打断标记`                                                                                                             |
+| currentThread()  | static | 获取当前正在执行的线程                         |                                                                                                                       |
+| sleep(long n)    | static | 让当前执行的线程休眠`n`毫秒，休眠时让出`CPU`的时间片给其他线程 |                                                                                                                       |
+| yield()          | static | 提示线程调度器让出当前线程对`CPU`的使用              |                                                                                                                       |
