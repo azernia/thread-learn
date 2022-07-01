@@ -17,7 +17,7 @@ public class SharedTest {
 
     private static int count = 0;
 
-    private static AtomicInteger atomicInteger = new AtomicInteger(0);
+    private static final AtomicInteger atomicInteger = new AtomicInteger(0);
 
     /**
      * 阻塞式
