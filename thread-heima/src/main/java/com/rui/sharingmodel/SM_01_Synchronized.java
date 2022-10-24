@@ -13,13 +13,13 @@ import lombok.extern.slf4j.Slf4j;
  *
  * @author rui
  */
-@Slf4j(topic = "rui.SM_01_Monitor")
-public class SM_01_Monitor {
+@Slf4j(topic = "rui.SM_01_Synchronized")
+public class SM_01_Synchronized {
     private static int count = 0;
 
     public static void main(String[] args) throws InterruptedException {
         Thread t1 = new Thread(() -> {
-            synchronized (SM_01_Monitor.class) {
+            synchronized (SM_01_Synchronized.class) {
                 for (int i = 0; i < 5000; i++) {
                     count++;
                 }
@@ -27,7 +27,7 @@ public class SM_01_Monitor {
         }, "t1");
 
         Thread t2 = new Thread(() -> {
-            synchronized (SM_01_Monitor.class) {
+            synchronized (SM_01_Synchronized.class) {
                 for (int i = 0; i < 5000; i++) {
                     count--;
                 }
