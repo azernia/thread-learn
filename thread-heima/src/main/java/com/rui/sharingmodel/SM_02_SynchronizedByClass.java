@@ -10,7 +10,7 @@ import lombok.extern.slf4j.Slf4j;
  * @author rui
  */
 @Slf4j(topic = "rui.SM_01_SynchronizedByClass")
-public class SM_01_SynchronizedByClass {
+public class SM_02_SynchronizedByClass {
     public static void main(String[] args) throws InterruptedException {
         Room room = new Room();
         Thread increment = new Thread(() -> {
