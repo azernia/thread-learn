@@ -29,7 +29,7 @@ public class TS_02_ThreadSafe {
 }
 
 class ThreadSafe {
-    public final void method1(int loopNumber) {
+    public final void method1(int loopNumber) { // 加上 final 关键字防止子类重写
         List<String> list = new ArrayList<>();  // 每个线程会创建不同的对象
         for (int i = 0; i < loopNumber; i++) {
             method2(list);
