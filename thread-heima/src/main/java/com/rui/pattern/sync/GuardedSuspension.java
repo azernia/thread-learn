@@ -47,10 +47,14 @@ class GuardedObj {
 
     /**
      * 获取结果
+     * @param timeout 等待最大时间
      * @return object
      */
-    public Object get() {
+    public Object get(long timeout) {
         synchronized (this) {
+            // 开始时间
+            long begin = System.currentTimeMillis();
+            long passedTime = 0L;
             while (response == null) {
                 try {
                     this.wait();
@@ -58,6 +62,8 @@ class GuardedObj {
                     e.printStackTrace();
                 }
             }
+            // 求得经理时间
+            passedTime = System.currentTimeMillis() - begin;
             return this.response;
         }
     }
