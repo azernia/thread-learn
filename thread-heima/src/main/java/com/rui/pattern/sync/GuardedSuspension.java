@@ -22,7 +22,7 @@ public class GuardedSuspension {
         new Thread(() -> {
             // 等待结果
             log.debug("等待结果");
-            List<String> list = (List<String>) guardedObj.get();
+            List<String> list = (List<String>) guardedObj.get(2000);
             log.debug("结果大小：{}", list.size());
         }, "t1").start();
 
@@ -56,14 +56,23 @@ class GuardedObj {
             long begin = System.currentTimeMillis();
             long passedTime = 0L;
             while (response == null) {
+                long waitTime = timeout - passedTime;
+                // 经历的时间超过最大时间
+                // if (passedTime >= timeout) {
+                //     break;
+                // }
+                // 这一轮循环应该等待的时间
+                if (waitTime <= 0) {
+                    break;
+                }
                 try {
-                    this.wait();
+                    this.wait(waitTime);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
+                // 求得经历时间
+                passedTime = System.currentTimeMillis() - begin;
             }
-            // 求得经理时间
-            passedTime = System.currentTimeMillis() - begin;
             return this.response;
         }
     }
