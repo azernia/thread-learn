@@ -25,11 +25,13 @@ public class TwoPhaseTerminationByVolatile {
      * 启动监控线程
      */
     public void start() {
-        // 只创建一个监控线程
-        if (started) {
-            return;
+        synchronized (this) {
+            // 只创建一个监控线程
+            if (started) {
+                return;
+            }
+            started = true;
         }
-        started = true;
         monitor = new Thread(() -> {
             while (true) {
                 if (stop) {
