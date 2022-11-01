@@ -1,4 +1,4 @@
-package com.rui.threadcommonmethod.apply;
+package com.rui.pattern.apply;
 
 import com.rui.utils.Sleeper;
 import lombok.extern.slf4j.Slf4j;
@@ -33,7 +33,7 @@ public class TwoPhaseTermination {
                     log.debug("执行监控");  // 情况2
                 } catch (InterruptedException e) {
                     e.printStackTrace();
-                    currentThread.interrupt();  // 重新设置打断标记
+                    currentThread.interrupt();  // 重新设置打断标记 因为 sleep 会清除打断标记
                 }
             }
         }, "monitor");
