@@ -31,22 +31,22 @@ public class TwoPhaseTerminationByVolatile {
                 return;
             }
             started = true;
+            monitor = new Thread(() -> {
+                while (true) {
+                    if (stop) {
+                        log.debug("料理后事");
+                        break;
+                    }
+                    try {
+                        Thread.sleep(1000); // 情况1 进入 catch，会重置打断标记
+                        log.debug("执行监控");  // 情况2
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }, "monitor");
+            monitor.start();
         }
-        monitor = new Thread(() -> {
-            while (true) {
-                if (stop) {
-                    log.debug("料理后事");
-                    break;
-                }
-                try {
-                    Thread.sleep(1000); // 情况1 进入 catch，会重置打断标记
-                    log.debug("执行监控");  // 情况2
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        }, "monitor");
-        monitor.start();
     }
 
     /**
