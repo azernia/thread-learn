@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
  * description: 可见性
  * <hr/>
  * date: 2022/11/1
+ * 适用一个写线程多个读线程
  *
  * @author rui
  */
