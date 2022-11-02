@@ -28,11 +28,15 @@ class A {
 
     private A() {}
 
-    public static synchronized A getInstance() {
-        if (Objects.nonNull(INSTANCE)) {
-            return INSTANCE;
+    public static A getInstance() {
+        if (Objects.isNull(INSTANCE)) {
+            synchronized (A.class) {
+                if (Objects.nonNull(INSTANCE)) {
+                    return INSTANCE;
+                }
+                INSTANCE = new A();
+            }
         }
-        INSTANCE = new A();
         return INSTANCE;
     }
 }
